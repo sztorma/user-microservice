@@ -1,4 +1,4 @@
-package com.sztorma.rest.webservices.restfulweb.services;
+package com.sztorma.rest.webservices.restfulwebservices;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

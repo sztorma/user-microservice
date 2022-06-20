@@ -1,4 +1,4 @@
-package com.sztorma.rest.webservices.restfulweb.services;
+package com.sztorma.rest.webservices.restfulwebservices;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
