@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -52,5 +53,14 @@ public class UserResourceIT {
             .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("2"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Eve"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.birthDate").value(stringDate));
+    }
+
+    @Test
+    @DisplayName("Save new user")
+    public void testSaveNewUser() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\": \"Csabi\", \"birthDate\": \"2001-11-14\"}"))
+            .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
