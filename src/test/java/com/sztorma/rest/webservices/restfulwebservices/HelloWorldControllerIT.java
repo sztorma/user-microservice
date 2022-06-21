@@ -24,4 +24,12 @@ public class HelloWorldControllerIT {
             .andExpect(MockMvcResultMatchers.content().string("Hello World"));
     }
 
+    @Test
+    @DisplayName("Hello world bean")
+    public void testHelloWorldBean() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/hello-world-bean"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Hello World"));
+    }
+
 }
