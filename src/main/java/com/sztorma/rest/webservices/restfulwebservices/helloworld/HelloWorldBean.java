@@ -1,4 +1,4 @@
-package com.sztorma.rest.webservices.restfulwebservices;
+package com.sztorma.rest.webservices.restfulwebservices.helloworld;
 
 public class HelloWorldBean {
     private String message;

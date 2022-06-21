@@ -1,4 +1,4 @@
-package com.sztorma.rest.webservices.restfulwebservices;
+package com.sztorma.rest.webservices.restfulwebservices.helloworld;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
