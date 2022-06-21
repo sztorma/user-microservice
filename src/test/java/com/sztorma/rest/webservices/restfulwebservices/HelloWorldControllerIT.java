@@ -32,4 +32,12 @@ public class HelloWorldControllerIT {
             .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Hello World"));
     }
 
+    @Test
+    @DisplayName("Hello world path variable")
+    public void testHelloWorldPathVariable() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/hello-world/path-variable/Charlie"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Hello World, Charlie"));
+    }
+
 }
