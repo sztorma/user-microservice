@@ -87,4 +87,16 @@ public class UserResourceIT {
             .andExpect(MockMvcResultMatchers.status().isCreated())
             .andExpect(header().string("Location", "http://localhost/users/4"));
     }
+
+    @Test
+    @DisplayName("Attempt save invalid user")
+    public void testAttemptSaveInvalidUser() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\": \"s\", \"birthDate\": \"3001-11-14\"}"))
+            .andExpect(MockMvcResultMatchers.status().isBadRequest())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.invalidParams.name").value("name is too short at least 2 characters required"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.invalidParams.birthDate").value("Can not be future"));
+    }
+
 }

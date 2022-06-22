@@ -2,11 +2,7 @@ package com.sztorma.rest.webservices.restfulwebservices.exception;
 
 import java.util.Date;
 
-public class ExceptionResponse {
-
-    private Date timestamp;
-
-    private String message;
+public class ExceptionResponse extends FallbackResponse {
 
     private String details;
 
@@ -14,14 +10,6 @@ public class ExceptionResponse {
         this.timestamp = timestamp;
         this.message = message;
         this.details = details;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
     public String getDetails() {
