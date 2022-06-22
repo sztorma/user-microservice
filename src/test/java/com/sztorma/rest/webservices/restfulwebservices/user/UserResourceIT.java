@@ -65,6 +65,20 @@ public class UserResourceIT {
     }
 
     @Test
+    @DisplayName("Delete user")
+    public void testDeleteUser() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/users/1"))
+            .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @DisplayName("Delete non existing user")
+    public void testDeleteNonExistingUser() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/users/10000"))
+            .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
     @DisplayName("Save new user")
     public void testSaveNewUser() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.post("/users")

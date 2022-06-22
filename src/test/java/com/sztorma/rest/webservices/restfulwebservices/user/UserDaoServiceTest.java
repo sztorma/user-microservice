@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserDaoServiceTest {
 
@@ -40,7 +39,7 @@ public class UserDaoServiceTest {
     @Test
     @DisplayName("Not found")
     public void testFindNone() {
-        Exception e = assertThrows(Exception.class, () -> userDaoService.findOne(4));
-        assertTrue(e instanceof NoSuchElementException);
+        User user = userDaoService.findOne(4);
+        assertEquals(null, user);
     }
 }
