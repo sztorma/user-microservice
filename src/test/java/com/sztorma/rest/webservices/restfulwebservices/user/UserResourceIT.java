@@ -58,6 +58,13 @@ public class UserResourceIT {
     }
 
     @Test
+    @DisplayName("User not found")
+    public void testRetrieveNoUser() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/users/200"))
+            .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
     @DisplayName("Save new user")
     public void testSaveNewUser() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.post("/users")

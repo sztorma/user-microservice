@@ -35,7 +35,7 @@ public class UserDaoService {
 
     public User findOne(int id) {
         Optional<User> found = users.stream().filter(user -> user.getId() == id).findFirst();
-        return found.get();
+        return found.orElse(null);
     }
 
 }
