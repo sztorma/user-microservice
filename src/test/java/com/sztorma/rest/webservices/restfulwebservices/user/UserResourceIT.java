@@ -54,7 +54,9 @@ public class UserResourceIT {
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("2"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Eve"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.birthDate").value(stringDate));
+            .andExpect(MockMvcResultMatchers.jsonPath("$.birthDate").value(stringDate))
+            .andExpect(MockMvcResultMatchers.jsonPath("$._links").exists())
+            .andExpect(MockMvcResultMatchers.jsonPath("$._links").isNotEmpty());
     }
 
     @Test
