@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -22,6 +23,16 @@ public class HelloWorldControllerIT {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/hello-world"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string("Hello World"));
+    }
+
+    @Test
+    @DisplayName("Good morning i18n")
+    public void testFrenchGoodMorningText() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/hello-world-internationalized")
+                .header(HttpHeaders.ACCEPT_LANGUAGE, "fr")
+            )
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string("Bonjour"));
     }
 
     @Test
