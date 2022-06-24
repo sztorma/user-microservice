@@ -2,16 +2,23 @@ package com.sztorma.rest.webservices.restfulwebservices.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.persistence.*;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+@Entity
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue
     private Integer id;
+    @Column
     @Size(min = 2, message = "name is too short at least 2 characters required")
     private String name;
 
+    @Column
     @Past(message = "Can not be future")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
@@ -20,6 +27,10 @@ public class User {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
+    }
+
+    public User() {
+
     }
 
     public Integer getId() {
