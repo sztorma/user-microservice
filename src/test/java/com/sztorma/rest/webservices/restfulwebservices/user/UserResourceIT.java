@@ -1,5 +1,6 @@
 package com.sztorma.rest.webservices.restfulwebservices.user;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,9 @@ public class UserResourceIT {
     @Autowired
     private MockMvc mockMvc;
 
+    private static final String UUID_STRING =
+        "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}";
+
     @BeforeAll
     public static void setup() {
         stringDate = DATE_FORMAT.format(new Date());
@@ -37,12 +41,15 @@ public class UserResourceIT {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/users"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value("1"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].uuid", Matchers.matchesPattern(UUID_STRING)))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Adam"))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].birthDate").value(stringDate))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value("2"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].uuid", Matchers.matchesPattern(UUID_STRING)))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value("Eve"))
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].birthDate").value(stringDate))
             .andExpect(MockMvcResultMatchers.jsonPath("$[2].id").value("3"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].uuid", Matchers.matchesPattern(UUID_STRING)))
             .andExpect(MockMvcResultMatchers.jsonPath("$[2].name").value("Jack"))
             .andExpect(MockMvcResultMatchers.jsonPath("$[2].birthDate").value(stringDate));
     }
@@ -52,7 +59,8 @@ public class UserResourceIT {
     public void testRetrieveOneUser() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/users/2"))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("2"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.id").doesNotExist())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.uuid", Matchers.matchesPattern(UUID_STRING)))
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Eve"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.birthDate").value(stringDate))
             .andExpect(MockMvcResultMatchers.jsonPath("$._links").exists())

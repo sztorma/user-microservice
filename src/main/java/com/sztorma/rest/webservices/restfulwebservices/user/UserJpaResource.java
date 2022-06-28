@@ -1,6 +1,7 @@
 package com.sztorma.rest.webservices.restfulwebservices.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,6 @@ public class UserJpaResource {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private UserDaoService service;
 
     @GetMapping("/users")
     public List<User> retrieveAllUsers() {
@@ -41,16 +39,17 @@ public class UserJpaResource {
 
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable int id) {
-        User user = service.deleteById(id);
-        if (user == null) {
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
             throw new UserNotFoundException("id-" + id);
         }
-    }
 
+    }
 
     @PostMapping("/users")
     public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
-        User savedUser = service.save(user);
+        User savedUser = userRepository.save(user);
         URI location = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")

@@ -1,19 +1,26 @@
 package com.sztorma.rest.webservices.restfulwebservices.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(columnDefinition = "varchar(36)", nullable = false, updatable = false)
+    @Type(type = "uuid-char")
+    private UUID uuid;
+
     @Column
     @Size(min = 2, message = "name is too short at least 2 characters required")
     private String name;
@@ -25,12 +32,13 @@ public class User {
 
     public User(Integer id, String name, Date birthDate) {
         this.id = id;
+        this.uuid = UUID.randomUUID();
         this.name = name;
         this.birthDate = birthDate;
     }
 
     public User() {
-
+        this.uuid = UUID.randomUUID();
     }
 
     public Integer getId() {
@@ -39,6 +47,10 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public String getName() {
