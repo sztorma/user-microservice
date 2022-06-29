@@ -41,6 +41,7 @@ public class UserJpaResourceIT {
     public void testRetrievAllUsers() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/jpa/users"))
             .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(3)))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].uuid", Matchers.matchesPattern(UUID_STRING)))
             .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Jack"))
@@ -110,4 +111,23 @@ public class UserJpaResourceIT {
             .andExpect(MockMvcResultMatchers.jsonPath("$.invalidParams.birthDate").value("Can not be future"));
     }
 
+    @Test
+    @DisplayName("Retrieve certain user's all posts")
+    public void testRetrieveAllPostofUsers() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/jpa/users/1/posts")
+                .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].uuid", Matchers.matchesPattern(UUID_STRING)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].description").value("My first post"));
+    }
+
+    @Test
+    @DisplayName("Retrieve non existing user's all posts")
+    public void testRetrieveAllPostofNonExistingUsers() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/jpa/users/12345/posts")
+                .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 }
