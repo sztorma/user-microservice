@@ -25,6 +25,17 @@ public class Post {
     @JsonIgnore
     private User user;
 
+    public Post() {
+        this.uuid = UUID.randomUUID();
+    }
+
+    public Post(Integer id, String description, User user) {
+        this.id = id;
+        this.uuid = UUID.randomUUID();
+        this.description = description;
+        this.user = user;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -35,10 +46,6 @@ public class Post {
 
     public UUID getUuid() {
         return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
     }
 
     public String getDescription() {

@@ -130,4 +130,14 @@ public class UserJpaResourceIT {
                 .contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
+
+    @Test
+    @DisplayName("Save new post")
+    public void testSaveNewPost() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/jpa/users/2/posts")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"description\": \"My new post\"}"))
+            .andExpect(MockMvcResultMatchers.status().isCreated())
+            .andExpect(header().string("Location", Matchers.matchesPattern("http://localhost/jpa/users/2/posts/\\d+")));
+    }
 }
